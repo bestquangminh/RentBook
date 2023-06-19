@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars').engine;
 require('dotenv').config();
+var bodyParser = require('body-parser')
 const path = require('path');
 const app = express();
 const port = 3000;

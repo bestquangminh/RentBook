@@ -1,5 +1,8 @@
 const Books = require('../model/Book');
 const Author = require('../model/Author');
+const Users = require('../model/User');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 class siteController {
     index(req, res, next) {
         Books.find()
@@ -59,6 +62,45 @@ class siteController {
       catch (err) {
         res.status(500).json(err);
       }
+    }
+     readBook(req, res) {
+      const gmailInput = req.body.gmail;
+      console.log(gmailInput);
+      Users.findOne({gmail:gmailInput})
+      .then(user =>{
+        if(!user){
+          return res.status(403).json('Not find User');
+        }
+        console.log(user);
+        const secret = process.env.JWT_ACCESS_TOKEN + user.password;
+        const token = jwt.sign({gmailInput: user.gmailInput, id: user._id}, secret, {
+          expiresIn: '5m',
+        });
+        const link = `http://localhost:3000/readbook/${user._id}/${token}`;   
+        console.log(link);     
+        return res.status(200).json('success');
+      })
+      .catch(err => {
+        res.status(500).json(err);
+      })
+    }
+    
+    myBook(req,res) {
+      const {id, token} = req.params;
+      console.log(req.params);
+      Users.findOne({_id: id})
+        .then(user => {
+          if(!user){
+            return res.json('User not found');
+          }
+          const secret = process.env.JWT_ACCESS_TOKEN + user.password;
+          try {
+            const verify = jwt.verify(token, secret);
+            res.render('my-book');
+          }catch(err) {
+            res.send('not verified');
+          }
+        })
     }
       
 }
