@@ -5,4 +5,5 @@ router.get('/', siteController.index);
 router.get('/createForm', siteController.createFormBook);
 router.post('/postbook', siteController.postBook);
 router.get('/details/:slug', siteController.detailsBook);
+router.delete('/:id', siteController.deleteBook);
 module.exports = router;

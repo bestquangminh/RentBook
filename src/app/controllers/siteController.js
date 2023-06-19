@@ -35,19 +35,30 @@ class siteController {
       catch (err) {
         res.status(500).json(err);
       }
-      // const formdata = req.body;
-      // const book = new Books(formdata);
-      // book.save().then(() => res.status(200))
-      // .catch(err => res.send(err));
     }
-    detailsBook(req, res, next)  {
-      Books.find({slug: req.params.slug}).lean()
-      .then(book => {
+    async detailsBook(req, res, next)  {
+      try {
+        const book = await Books.find({slug: req.params.slug}).lean();
         res.render('details', {
           book
         })
-      })
-      .catch(err => res.status(500))
+      }
+      catch (err) {
+        res.status(500).json(err);
+      }
+    }
+    async deleteBook(req,res) {
+      try {
+        await Author.updateMany(
+          {books: req.params.id},
+          {$pull: {books: req.params.id}}
+        );
+        await Books.findByIdAndDelete(req.params.id);
+        res.status(200).json('deleted successfully');
+      }
+      catch (err) {
+        res.status(500).json(err);
+      }
     }
       
 }
