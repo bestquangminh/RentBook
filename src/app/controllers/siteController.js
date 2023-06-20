@@ -27,7 +27,12 @@ class siteController {
     }
    async postBook(req, res, next) {
       try {
-        const newBook = new Books(req.body);
+        const imageUrl = req.file.path;
+        console.log(imageUrl);
+        const newBook = new Books({
+          ...req.body,
+          images: imageUrl
+        });
         const saveBook = await newBook.save();
         if(req.body.author) {
           const author = Author.findById(req.body.author);
@@ -63,15 +68,13 @@ class siteController {
         res.status(500).json(err);
       }
     }
-     readBook(req, res) {
+    postLinkBook(req, res) {
       const gmailInput = req.body.gmail;
-      console.log(gmailInput);
       Users.findOne({gmail:gmailInput})
       .then(user =>{
         if(!user){
           return res.status(403).json('Not find User');
         }
-        console.log(user);
         const secret = process.env.JWT_ACCESS_TOKEN + user.password;
         const token = jwt.sign({gmailInput: user.gmailInput, id: user._id}, secret, {
           expiresIn: '5m',
@@ -85,7 +88,7 @@ class siteController {
       })
     }
     
-    myBook(req,res) {
+    readMyBook(req,res) {
       const {id, token} = req.params;
       console.log(req.params);
       Users.findOne({_id: id})

@@ -1,5 +1,5 @@
 <div class='m-4'>
-  <form method='post' action='/postbook'>
+  <form method='post' action='/postbook' enctype="multipart/form-data">
     <div class='form-group m-2'>
       <label for='name'>Tên</label>
       <input type='text' class='form-control' id='name' name='name' />
@@ -43,7 +43,8 @@
     <div class='form-group m-2'>
       <label for='images'>Images</label>
       <input
-        type='text'
+        type='file'
+        multiple='multiple'
         class='form-control'
         id='images'
         name='images'
