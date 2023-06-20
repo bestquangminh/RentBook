@@ -1,0 +1,49 @@
+<h1>Shopping Cart</h1>
+
+<div class="container">
+  <div class="row">
+    <div class="col col-lg-8">
+      {{#each cartItems}}
+      <div class="p-3 course__container d-flex align-items-center">
+        <img
+          style="width: 120px; height: 70px"
+          class="course__img"
+          src="{{this.productID.image}}"
+          alt="Card image cap"
+        />
+        <div class="p-2 w-75 course__info">
+          <div class="d-flex justify-content-between align-items-center">
+            <a
+              href="/course/{{this.productID.slug}}"
+              class="text-decoration-none link-dark fw-bold course__text-title"
+            >{{this.productID.name}}</a>
+            <p class="m-0 course__price">{{this.productID.price}}</p>
+          </div>
+          <p>{{this.quantity}}</p>
+          <form action="/deleteCartItem" method="POST">
+            <input type="hidden" value="{{this.productID._id}}" name="productId" />
+            <button class="link-danger" type="submit">Delete</button>
+          </form>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+    <div class="col col-lg-4">
+      <div class="summary">
+        <h1 class="summary__title text-center">Summary</h1>
+        <div class="summary__quantity d-flex justify-content-between">
+          <p>Quantity</p>
+          <p>{{totalQuantity}}</p>
+        </div>
+        <div class="summary__total d-flex justify-content-between">
+          <p class="fw-bold">Total</p>
+          <p class="text-danger">{{totalPrice}}</p>
+        </div>
+        <form action="/create-order" method="POST">
+          <button type="submit" class="orderBtn"><p class="m-0 fw-bold">Order Now!</p></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
