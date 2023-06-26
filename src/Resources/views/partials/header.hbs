@@ -1,0 +1,93 @@
+<header>
+    <div class="container header">
+        <a href="/"><img src="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/fahasa-logo.png"
+                class="header__img" alt="Image" /></a>
+        <input class="search" type="text" placeholder="    Tìm kiếm sách mong muốn...    " />
+        <div class="d-flex align-items-center w-25 justify-content-around">
+            <ul class="navbarController list-unstyled m-0 p-o">
+
+            </ul>
+            <a class="shoppingcartBtn" href="/cart"><i class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+    </div>
+</header>
+
+<style>
+    header {
+        background-color: #FC7981;    
+    }
+
+    .header {
+        display: flex;
+        height: 70px;
+        align-items: center;
+        justify-content: space-around;
+    }
+
+    .search {
+        background-color: white;
+        border-radius: 10px;
+        height: 40px;
+        width: 50%;
+        border: none;
+        margin: auto;
+    }
+</style>
+
+<script>
+    let header = document.querySelector('.navbarController');
+    const username = localStorage.getItem('userName');
+    const accessToken = localStorage.getItem('accessToken');
+    // const logoutApi = 'http://localhost:3000/v1/auth/logout';
+    if (accessToken) {
+        const html = `
+      <li class='nav-item dropdown nav-item-profile'>
+        {{! <img class='nav-item-profile-img' src='https://scontent.fsgn2-9.fna.fbcdn.net/v/t39.30808-6/280108735_1429336350837488_2960651896472875223_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=PW12taoeNZkAX_6sG9q&_nc_ht=scontent.fsgn2-9.fna&oh=00_AfA-YAqyp7iyWIOmqgSxRuldiDvpHkvQjARqDkg4PiJbmw&oe=6454BFC4' alt='' /> }}
+        <a class='nav-link userNameBtn dropdown-toggle' href='#' id='navbarDropdown' role='button' data-bs-toggle='dropdown' aria-expanded='false'></a>
+        <ul class='dropdown-menu r-0' aria-labelledby='navbarDropdown'>
+          <li class='nav-item'>
+            <a class='nav-link' href='/myBook'>My Book</a>
+          </li>
+          <li class='nav-item'>
+            <a class='nav-link' href='http://localhost:3000/course/create'>Tạo Khóa Học</a>
+          </li>
+          <li><hr class='dropdown-divider' /></li>
+          <li><a class='logoutBtn dropdown-item text-danger'>Logout</a></li>
+        </ul>
+      </li>`;
+
+        header.innerHTML = html;
+
+        const userNameDisplay = document.querySelector('.userNameBtn');
+        userNameDisplay.textContent = username;
+
+        /*const logoutBtn = document.querySelector('.logoutBtn');
+        logoutBtn.addEventListener('click', async (e) => {
+          try {
+            const res = await fetch(logoutApi, {
+              method: 'POST',
+              credentials: 'same-origin',
+              headers: {
+                'Content-Type': 'application/json',
+                'token': `Bearer ${localStorage.getItem('accessToken')}`,
+              },
+            });
+            if (res.ok) {
+              localStorage.removeItem('accessToken');
+              location.reload();
+            }
+          } catch (err) {
+            alert(err);
+          } 
+        });*/
+    } else {
+        const htmls = `
+      <li class='nav-item dropdown nav-item-profile'>
+        <a class='loginBtn btn btn-dark' href='http://localhost:3000/loginform'>Login</a>
+      </li>`;
+
+        header.innerHTML = htmls;
+    }
+
+
+</script>

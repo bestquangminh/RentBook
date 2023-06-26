@@ -10,7 +10,6 @@ const usersSchema = new Schema(
         items: [
           {
             productID: {type: Schema.Types.ObjectId, ref: 'book', required: true},
-            quantity: {type: Number, required: true}
           }
         ],
       }
@@ -19,5 +18,26 @@ const usersSchema = new Schema(
       timestamps: true,
     },
   );
+  usersSchema.methods.addToCart = function(book) {
+    const cartProductIndex = this.cart.items.findIndex(cp => {
+      return cp.productID.toString() === book._id.toString();
+    });
+    const updateCartItems = [...this.cart.items];
+      updateCartItems.push({
+        productID: book._id,
+      });
+    const updatedCart = {
+      items: updateCartItems
+    };
+    this.cart = updatedCart;
+    return this.save();
+  };
+  usersSchema.methods.removeFromCart = function(productID) {
+    const updateCartItems = this.cart.items.filter(item => {
+      return item.productID.toString() !== productID.toString();
+    });
+    this.cart.items = updateCartItems;
+    return this.save();
+  }
 const Users = mongoose.model('user', usersSchema);
 module.exports = Users;

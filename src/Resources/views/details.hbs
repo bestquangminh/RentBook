@@ -1,5 +1,19 @@
-{{#each book}}
-{{this.name}}
-<img src="/{{this.images}}" alt="">
-{{!-- <embed style="height: 100%; width:100%" src="https://www.orimi.com/pdf-test.pdf"  frameborder="0"></embed> --}}
-{{/each}}
+<div class="container">
+    <div class="d-flex mt-5 p-4 details">
+        {{#each book}}
+    <div style="margin-right: 8px;" class="listOfImage">
+            <img class="mb-4 listOfImage__item" src="/{{this.images.[0]}}" alt="">
+            <img class="listOfImage__item" src="/{{this.images.[1]}}" alt="">
+    </div>
+    <div class="details__bigImg">
+        <img class="details__bigImg-item" src="/{{this.images.[0]}}" alt="">
+    </div>
+    <div class="details__info">
+        <h2 class="details__info-name">{{this.name}}</h2>
+        <p class="details__info-author">{{this.author.name}}</p>
+        <p class="details__info-price">Gía thuê: <p>{{this.price}}</p></p>
+    </div>
+        {{/each}}
+    </div>
+</div>
+
