@@ -1,24 +1,21 @@
 const Books = require('../model/Book');
 const Author = require('../model/Author');
 const Users = require('../model/User');
+const Orders = require('../model/Order');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const Orders = require('../model/Order');
 class siteController {
-  index(req, res, next) {
-    Books.find()
-      .populate('author')
-      .lean()
-      .then((books) => {
-        Author.find().lean()
-          .then((author) => {
-            res.render('home', {
-              books,
-              author
-            });
-          })
+  async index(req, res, next) {
+    try {
+      const books = await Books.find().populate('author').lean();
+      const author = await Author.find().lean();
+      res.render('home', {
+        books,
+        author
       })
-      .catch(next);
+    } catch {
+      res.status(500);
+    }
   }
 
   async createFormBook(req, res, next) {
@@ -35,16 +32,17 @@ class siteController {
   createFormLogin(req, res, next) {
     res.render('login');
   }
+  createFormRegister(req,res,next) {
+    res.render('register');
+  }
   async postBook(req, res, next) {
     try {
       console.log(req.files);
       const imageFiles = req.files['images']; // Retrieve the array of image files
       const imageUrl = imageFiles.map(file => file.path); // Map the paths of image files
-      console.log(imageUrl);
 
       const pdfFile = req.files['pdfFile'][0]; // Retrieve the single PDF file
       const pdfUrl = pdfFile.path; // Get the path of the uploaded PDF file
-      console.log(pdfUrl);
       const newBook = new Books({
         ...req.body,
         images: imageUrl,
@@ -63,9 +61,12 @@ class siteController {
   }
   async detailsBook(req, res, next) {
     try {
-      const book = await Books.find({ slug: req.params.slug }).lean().populate('author');
+      const book = await Books.findOne({ slug: req.params.slug }).lean().populate('author');
+      const authorBook = await Books.find({author: book.author._id}).lean();
+      console.log(authorBook);
       res.render('details', {
         book,
+        authorBook
       })
     }
     catch (err) {

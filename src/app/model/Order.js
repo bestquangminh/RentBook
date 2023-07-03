@@ -5,7 +5,8 @@ const orderSchema = new Schema({
     // ngày thuê, ngày hệt hạn, tổng tiền
   products: [{
       productData: {type: Object, required: true},
-      timerent: {type: Date, required: true}
+      timerent: {type: Date, required: true},
+      dayrent: {type: Number}
   }],
   user: {
     name: {type: String, required: true},

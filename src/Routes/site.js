@@ -33,10 +33,11 @@ const verifyController = require('../app/middlewares/verifyController');
 router.get('/', siteController.index);
 router.get('/createForm', verifyController.verifyToken, verifyController.verifyAdmin, siteController.createFormBook);
 router.get('/loginForm', siteController.createFormLogin);
+router.get('/registerForm', siteController.createFormRegister);
 router.post('/postbook', upload.fields([{name: 'images', maxCount: 5}, {name: 'pdfFile', maxCount:1}]), siteController.postBook);
 router.get('/details/:slug',siteController.detailsBook);
 router.delete('/:id', siteController.deleteBook);
 router.get('/mybook',verifyController.verifyToken,siteController.myBook);
 router.post('/postLinkBook', verifyController.verifyToken, siteController.postLinkBook); //* sau khi thanh toán sẽ đc post qua route này
-router.get('/readbook/:id/:token', siteController.readMyBook);
+router.get('/readbook/:id/:token', verifyController.verifyToken, siteController.readMyBook);
 module.exports = router;

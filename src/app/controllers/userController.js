@@ -23,7 +23,7 @@ class userController {
       });
       //* Save to database
       const user = await newUser.save();
-      res.status(200).json(user);
+      res.redirect('/loginform');
     } catch (err) {
       res.status(500).json(err);
     }
@@ -83,6 +83,10 @@ class userController {
       res.clearCookie('refreshToken');
       refreshTokenArray = refreshTokenArray.filter(
         (token) => token !== req.cookies.refreshToken,
+      );
+      res.clearCookie('accessToken');
+      accessToken = accessToken.filter(
+        (token) => token !== req.cookies.accessToken,
       );
       res.status(200).json('logged out !');
     } catch (err) {

@@ -16,7 +16,7 @@ class VerifyController {
         }
       });
     } else {
-      res.status(401).json('You are not authorized to access this');
+      res.redirect('/loginform')
     }
   };
 

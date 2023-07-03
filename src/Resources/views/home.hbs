@@ -1,50 +1,50 @@
 <div style="font-style: normal; font-weight: 600; font-size: 22px; color: #656565; margin: 25px ">
-    Sắp xếp theo :
-    <select id="myDropdown">
-        <option disabled selected>Loại sách</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-    </select>
-    <select id="myDropdown">
-        <option disabled selected>Tác Giả</option>
-        {{#each author}}
-        <option value="{{this._id}}">{{this.name}}</option>
-        {{/each}}
+  Sắp xếp theo :
+  <select id="myDropdown">
+    <option disabled selected>Loại sách</option>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </select>
+  <select id="myDropdown">
+    <option disabled selected>Tác Giả</option>
+    {{#each author}}
+    <option value="{{this._id}}">{{this.name}}</option>
+    {{/each}}
 
-    </select>
-    <select id="myDropdown">
-        <option disabled selected>Giá Tiền</option>
-        <option value="1">Option 1</option>
-        <option value="2">Option 2</option>
-        <option value="3">Option 3</option>
-    </select>
+  </select>
+  <select id="myDropdown">
+    <option disabled selected>Giá Tiền</option>
+    <option value="1">Option 1</option>
+    <option value="2">Option 2</option>
+    <option value="3">Option 3</option>
+  </select>
 </div>
 <div class="container">
-    <div class="row">
-        {{#each books}}
-        <div class="col-md-6 col-lg-4">
-            <div class="bookinfo-container mb-4">
-                <div class="bookinfo__imgContainer">
-                    <a href="/details/{{this.slug}}">
-                        <img style="width: 95px; height:145px" src="{{this.images.[0]}}" alt=""
-                            class="bookinfo__imgContainer-img m-2">
-                    </a>
-                </div>
-                <div class="bookinfo__text">
-                    <h2 class="bookinfo__text-header">{{this.name}}</h2>
-                    <span class="bookinfo__text-description">{{this.author.name}}</span>
-                    <p class="bookinfo__text-price">{{this.price}} đ</p>
-                    {{!-- <a class="btn bookinfo__text-btn" href="">Thuê ngay</a> --}}
-                    <form>
-                        <button class="addtocartBtn" data-productid="{{this._id}}" type="button">Add to cart</button>
-                        <input type="hidden" id="productID" name="productID" value="{{this._id}}">
-                    </form>
-                </div>
-            </div>
+  <div class="row">
+    {{#each books}}
+    <div class="col-md-6 col-lg-4">
+      <div class="bookinfo-container mb-4">
+        <div class="bookinfo__imgContainer">
+          <a href="/details/{{this.slug}}">
+            <img style="width: 95px; height:145px" src="{{this.images.[0]}}" alt=""
+              class="bookinfo__imgContainer-img m-2">
+          </a>
         </div>
-        {{/each}}
+        <div class="bookinfo__text">
+          <h2 class="bookinfo__text-header">{{this.name}}</h2>
+          <span class="bookinfo__text-description">{{this.author.name}}</span>
+          <p class="bookinfo__text-price">{{this.price}} đ</p>
+          {{!-- <a class="btn bookinfo__text-btn" href="">Thuê ngay</a> --}}
+          <form>
+            <button class="btn addtocartBtn" data-productid="{{this._id}}" type="button">Add to cart</button>
+            <input type="hidden" id="productID" name="productID" value="{{this._id}}">
+          </form>
+        </div>
+      </div>
     </div>
+    {{/each}}
+  </div>
 </div>
 
 
@@ -59,17 +59,16 @@
   addToCartBtn.forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const id = e.target.dataset.productid;
-      console.log(id);
-    try {
-      const response = await axios.post(addTOCartAPI, { token: localStorage.getItem('accessToken'),productID:id }, {
-        headers: headers
-      });
-      if (response.status === 200) {
-        alert(response.status);
+      try {
+        const response = await axios.post(addTOCartAPI, { token: localStorage.getItem('accessToken'), productID: id }, {
+          headers: headers
+        });
+        if (response.status === 200) {
+          alert('Đã thêm sản phẩm vào giỏ hàng thành công');
+        }
+      } catch (error) {
+        alert(error);
       }
-    } catch (error) {
-      alert(error);
-    }
-  });
+    });
   })
 </script>

@@ -1,19 +1,84 @@
 <div class="container">
     <div class="d-flex mt-5 p-4 details">
-        {{#each book}}
-    <div style="margin-right: 8px;" class="listOfImage">
-            <img class="mb-4 listOfImage__item" src="/{{this.images.[0]}}" alt="">
-            <img class="listOfImage__item" src="/{{this.images.[1]}}" alt="">
+        <div style="margin-right: 8px;" class="listOfImage">
+            <img class="mb-4 listOfImage__item" src="/{{book.images.[0]}}" alt="">
+            <img class="listOfImage__item" src="/{{book.images.[1]}}" alt="">
+        </div>
+        <div class="details__bigImg">
+            <img class="details__bigImg-item" src="/{{book.images.[0]}}" alt="">
+        </div>
+        <div class="details__info">
+            <h2 class="details__info-name">{{book.name}}</h2>
+            <p class="details__info-author">{{book.author.name}}</p>
+            <p class="details__info-price">Gía thuê:
+            <p>{{book.price}}</p>
+            </p>
+        </div>
     </div>
-    <div class="details__bigImg">
-        <img class="details__bigImg-item" src="/{{this.images.[0]}}" alt="">
+    <div style="margin-top: 12px;" class="p-3 description details">
+        <h3 class="description__header">Thông tin sản phẩm</h3>
+        <table class="w-100">
+            <tbody class="description__info-table">
+                <tr class="description__info-item">
+                    <th>Mã hàng:</th>
+                    <td>{{book._id}}</td>
+                </tr>
+                <tr class="description__info-item">
+                    <th>Tác giả:</th>
+                    <td>{{book.author.name}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <span>{{book.description}}</span>
     </div>
-    <div class="details__info">
-        <h2 class="details__info-name">{{this.name}}</h2>
-        <p class="details__info-author">{{this.author.name}}</p>
-        <p class="details__info-price">Gía thuê: <p>{{this.price}}</p></p>
-    </div>
-        {{/each}}
+    <div style="margin-top: 12px;" class="p-3 authorBook details">
+        <h3>Sản phẩm liên quan</h3>
+        <div class="row">
+            {{#each authorBook}}
+            <div class="col col-lg-3">
+                <a href="/details/{{this.slug}}" class="border d-block authorBook__btn">
+                    <div class="w-100 h-100 authorBook__containImg">
+                        <img style="height: 400px;" class="w-100 mw-100 img-fluid "
+                            src="http://localhost:3000/{{this.images.[0]}}" alt="" class="authorBook__img">
+                    </div>
+                </a>
+                <div class="authorBook__info">
+                    <a href="/details/{{this.slug}}"
+                        class="link-dark text-decoration-none authorBook__detailsBtn">{{this.name}}</a>
+                    <p class="text-danger fw-bold">{{this.price}}đ</p>
+                </div>
+            </div>
+            {{/each}}
+        </div>
     </div>
 </div>
+<div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+</div>
+<script>
+    var modal = document.getElementById("myModal");
+    // Get the images and insert them inside the modal - use their "alt" text as a caption
+    var imgList = document.querySelectorAll(".listOfImage__item");
+    console.log(imgList);
+    var modalImg = document.getElementById("img01");
 
+    // Loop through each image and add a click event listener
+    imgList.forEach(function (img) {
+        img.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        }
+    });
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+
+</script>
