@@ -12,6 +12,7 @@ const orderSchema = new Schema({
     name: {type: String, required: true},
     userID: {type: Schema.Types.ObjectId, required: true, ref: 'Users'},
   },
+  dayrent: {type: Number}
 },
   {
     timestamps: true,

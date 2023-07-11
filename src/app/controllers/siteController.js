@@ -32,7 +32,7 @@ class siteController {
   createFormLogin(req, res, next) {
     res.render('login');
   }
-  createFormRegister(req,res,next) {
+  createFormRegister(req, res, next) {
     res.render('register');
   }
   async postBook(req, res, next) {
@@ -62,7 +62,7 @@ class siteController {
   async detailsBook(req, res, next) {
     try {
       const book = await Books.findOne({ slug: req.params.slug }).lean().populate('author');
-      const authorBook = await Books.find({author: book.author._id}).lean();
+      const authorBook = await Books.find({ author: book.author._id }).lean();
       console.log(authorBook);
       res.render('details', {
         book,
@@ -102,24 +102,25 @@ class siteController {
     }
   }
 
-  postLinkBook(req, res) {
-    const productId = req.body.productID;
-    Users.findById(req.user.id)
-      .then(user => {
-        if (!user) {
-          return res.status(403).json('Not find User');
-        }
-        const secret = process.env.JWT_ACCESS_TOKEN + user.password;
-        const token = jwt.sign({ id: user._id, productId }, secret, {
-          expiresIn: '5m',
-        });
-        const url = `http://localhost:3000/readbook/${user._id}/${token}`;
-        console.log(url);
-        return res.redirect(url);
-      })
-      .catch(err => {
-        res.status(500).json(err);
-      })
+  async postLinkBook(req, res) {
+    try {
+      const productId = req.body.productID;
+      const user = await Users.findById(req.user.id);
+      const order = await Orders.findOne({ 'user.userID': user._id });
+      console.log(order);
+      if (!user) {
+        return res.status(403).json('Not find User');
+      }
+      const secret = process.env.JWT_ACCESS_TOKEN + user.password;
+      const token = jwt.sign({ id: user._id, productId }, secret, {
+        expiresIn: '5m',
+      });
+      const url = `http://localhost:3000/readbook/${user._id}/${token}`;
+      console.log(url);
+      return res.redirect(url);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
   }
 
   //* Sau khi thanh toán xong, trang My Book sẽ lấy từ order(ktra req.user, get id from Order)

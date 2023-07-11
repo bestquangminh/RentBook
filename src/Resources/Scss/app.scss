@@ -1,6 +1,7 @@
 @import './source';
 @import './loguser';
 @import './details';
+@import './modal';
 .header{
     &__img{
         width: 250px;
@@ -104,8 +105,19 @@
 .details {
     background-color: #fff;
     border-radius: 10px;
+    &__info{
+        margin-left: 36px;
+        padding: 0 24px 24px 24px;
+    }
     &__bigImg-item{
-        width: 365px;
+        width: 285px;
+    }
+    &__btn-controller {
+        width: 450px;
+        gap: 8px;
+        &-item {
+            width: 50%;
+        }
     }
 }
 

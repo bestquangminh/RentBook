@@ -1,14 +1,14 @@
 const Users = require('../model/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-// const nodemailer = require('nodemailer');
-// const sendgridTransport = require('nodemailer-sendgrid-transport');
-// const { text } = require('body-parser');
-// const transporter = nodemailer.createTransport(sendgridTransport({
-//   auth: {
-//     api_key: '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'
-//   }
-// }))
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport');
+const { text } = require('body-parser');
+const transporter = nodemailer.createTransport(sendgridTransport({
+  auth: {
+    api_key: process.env.sendgrid_apiKey
+  }
+}))
 let refreshTokenArray = [];
 class userController {
   async registerUsers(req, res, next) {
@@ -93,86 +93,86 @@ class userController {
       res.status(500).json(err);
     }
   }
-  async getAllUsers(req,res) {
-    try{
+  async getAllUsers(req, res) {
+    try {
       const users = await Users.find().lean();
       res.status(200).json(users);
     }
-    catch(err){
+    catch (err) {
       res.status(500).json(err);
     }
   }
-//   forgotPassword(req,res) {
-//     const {gmailInput} = req.body;
-//     console.log(gmailInput);
-//     Users.findOne({gmail:gmailInput})
-//       .then(user =>{
-//         if(!user){
-//           return res.status(403).json('Not find User');
-//         }
-//         const secret = 'kimlong' + user.password;
-//         const token = jwt.sign({gmailInput: user.gmailInput, id: user._id}, secret, {
-//           expiresIn: '5m',
-//         });
-//         const link = `http://localhost:3000/reset-password/${user._id}/${token}`;        
-//         transporter.sendMail({
-//           to: 'bestquangminh2003@gmail.com',
-//           from: 'bestquangminh@gmail.com',
-//           subject: 'Link To Reset Password',
-//           text: link
-//         })
-//         return res.status(200).json('success');
-//       })
-//       .catch(err => {
-//         res.status(500).json('error');
-//       })
-//   }
-//   resetPassword(req,res) {
-//     const {id, token} = req.params;
-//     console.log(req.params);
-//     Users.findOne({_id: id})
-//       .then(user => {
-//         if(!user){
-//           return res.json('User not found');
-//         }
-//         const secret = 'kimlong' + user.password;
-//         try {
-//           const verify = jwt.verify(token, secret);
-//           res.render('change-password', {
-//             gmail: user.gmail,
-//             id: user.id,
-//             token: req.params.token
-//           });
-//         }catch(err) {
-//           res.send('not verified');
-//         }
-//       })
-//   }
-//   async postResetPassword(req, res) {
-//     const { id, token } = req.params;
-//     const { password } = req.body;
-//     try {
-//       const user = await Users.findOne({ _id: id });
-//       if (!user) {
-//         return res.json('User not found');
-//       }
-//       const secret = 'kimlong' + user.password;
-//       const verify = jwt.verify(token, secret);
-//       const salt = await bcrypt.genSalt(10);
-//       const hash = await bcrypt.hash(password, salt);
-//       // Update the user's password with the hashed password
-//       await Users.updateOne({_id: id},{
-//         $set:{
-//           password: hash,
-//         },
-//       });
-//       res.json('Password updated successfully');
-//     } catch (err) {
-//       console.error(err);
-//       res.send('Not verified');
-//     }
-//   }
-  
+  forgotPassword(req, res) {
+    const { gmailInput } = req.body;
+    console.log(gmailInput);
+    Users.findOne({ gmail: gmailInput })
+      .then(user => {
+        if (!user) {
+          return res.status(403).json('Not find User');
+        }
+        const secret = 'kimlong' + user.password;
+        const token = jwt.sign({ gmailInput: user.gmailInput, id: user._id }, secret, {
+          expiresIn: '5m',
+        });
+        const link = `http://localhost:3000/reset-password/${user._id}/${token}`;
+        transporter.sendMail({
+          to: 'bestquangminh2003@gmail.com',
+          from: 'bestquangminh@gmail.com',
+          subject: 'Link To Reset Password',
+          text: link
+        })
+        return res.status(200).json('success');
+      })
+      .catch(err => {
+        res.status(500).json('error');
+      })
+  }
+  resetPassword(req, res) {
+    const { id, token } = req.params;
+    console.log(req.params);
+    Users.findOne({ _id: id })
+      .then(user => {
+        if (!user) {
+          return res.json('User not found');
+        }
+        const secret = process.env.JWT_ACCESS_TOKEN + user.password;
+        try {
+          const verify = jwt.verify(token, secret);
+          res.render('change-password', {
+            gmail: user.gmail,
+            id: user.id,
+            token: req.params.token
+          });
+        } catch (err) {
+          res.send('not verified');
+        }
+      })
+  }
+  async postResetPassword(req, res) {
+    const { id, token } = req.params;
+    const { password } = req.body;
+    try {
+      const user = await Users.findOne({ _id: id });
+      if (!user) {
+        return res.json('User not found');
+      }
+      const secret = process.env.JWT_ACCESS_TOKEN + user.password;
+      const verify = jwt.verify(token, secret);
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(password, salt);
+      // Update the user's password with the hashed password
+      await Users.updateOne({ _id: id }, {
+        $set: {
+          password: hash,
+        },
+      });
+      res.json('Password updated successfully');
+    } catch (err) {
+      console.error(err);
+      res.send('Not verified');
+    }
+  }
+
 }
 
 module.exports = new userController();

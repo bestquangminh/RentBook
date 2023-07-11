@@ -87,7 +87,8 @@ class orderController {
             name: user.username,
             userID: req.user.id
           },
-          products: products
+          products: products,
+          dayrent: products[0].dayrent
         });
         return order.save()
           .then(() => {
@@ -253,31 +254,8 @@ class orderController {
 
     if (secureHash === signed) {
       //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
-      Users.findById(req.user.id)
-        .populate('cart.items.productID')
-        .exec()
-        .then(user => {
-          const products = user.cart.items.map(i => {
-            return { productData: { ...i.productID._doc }, timerent: i.timerent, dayrent: i.dayrent };
-          });
-          console.log(products);
-          const order = new Orders({
-            user: {
-              name: user.username,
-              userID: req.user.id
-            },
-            products: products
-          });
-          return order.save()
-            .then(() => {
-              user.cart.items = [];
-              return user.save();
-            });
-        })
-        .then(result => {
-          res.render('success', { code: vnp_Params['vnp_ResponseCode'] })
-        })
-        .catch(err => { console.log(err) });
+
+      res.render('orderSuccess', { code: vnp_Params['vnp_ResponseCode'] })
     } else {
       res.render('success', { code: '97' })
     }
