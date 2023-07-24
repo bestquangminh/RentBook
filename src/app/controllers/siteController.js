@@ -165,6 +165,36 @@ class siteController {
       })
   }
 
+  async getChart(req, res) {
+    try {
+      const result = await Orders.aggregate([
+        {
+          $unwind: "$products"
+        },
+        {
+          $group: {
+            _id: "$products.productData",
+            count: { $sum: 1 }
+          }
+        }
+      ]);
+      const labels = result.map(item => item._id.name);
+      const counts = result.map(item => item.count);
+
+      // Prepare the response
+      const response = {
+        labels: labels,
+        counts: counts
+      };
+      res.render('chartOrder',{
+        response
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ err: 'An error occurred' });
+    }
+  }
+
 }
 
 module.exports = new siteController();

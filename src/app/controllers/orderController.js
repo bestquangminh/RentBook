@@ -88,7 +88,8 @@ class orderController {
             userID: req.user.id
           },
           products: products,
-          dayrent: products[0].dayrent
+          dayrent: products[0].dayrent,
+          timerent: products[0].timerent
         });
         return order.save()
           .then(() => {
@@ -257,7 +258,7 @@ class orderController {
 
       res.render('orderSuccess', { code: vnp_Params['vnp_ResponseCode'] })
     } else {
-      res.render('success', { code: '97' })
+      res.render('home', { code: '97' })
     }
   }
 }

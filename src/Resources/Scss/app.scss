@@ -2,6 +2,11 @@
 @import './loguser';
 @import './details';
 @import './modal';
+@import './footer';
+
+.modal-backdrop {
+    z-index: -1;
+  }
 .header{
     &__img{
         width: 250px;
@@ -180,3 +185,15 @@ footer{
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.container__deletedCount {
+    position: absolute;
+    top: -6px;
+    right: -4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center; }

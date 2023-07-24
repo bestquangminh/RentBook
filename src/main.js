@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const handlebars = require('express-handlebars').engine;
 require('dotenv').config();
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const multer = require('multer');
 const upload = multer({dest:''});
@@ -18,6 +19,9 @@ db.connect();
 app.engine('hbs', handlebars({
   extname: '.hbs',
   handlebars: allowInsecurePrototypeAccess(require('handlebars')),
+  helpers: {
+    sum: (a,b) => a + b,
+  }
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname,'Resources/views'));
@@ -31,6 +35,7 @@ app.use(
 );
 app.use(cookieParser());
 app.use(express.json());
+app.use(methodOverride('_method'));
 //*Route init
 route(app);
 app.listen(port, () => {

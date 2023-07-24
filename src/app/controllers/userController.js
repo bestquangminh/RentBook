@@ -30,7 +30,6 @@ class userController {
   }
   async loginUsers(req, res, next) {
     try {
-      console.log(req.body);
       const user = await Users.findOne({ username: req.body.username });
       if (!user) {
         res.status(404).json('wrong username');

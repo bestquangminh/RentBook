@@ -40,4 +40,7 @@ router.delete('/:id', siteController.deleteBook);
 router.get('/mybook',verifyController.verifyToken,siteController.myBook);
 router.post('/postLinkBook', verifyController.verifyToken, siteController.postLinkBook); //* sau khi thanh toán sẽ đc post qua route này
 router.get('/readbook/:id/:token', verifyController.verifyToken, siteController.readMyBook);
+
+//*chart
+router.get('/chart', siteController.getChart);
 module.exports = router;
