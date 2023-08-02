@@ -109,7 +109,7 @@ class userController {
         if (!user) {
           return res.status(403).json('Not find User');
         }
-        const secret = 'kimlong' + user.password;
+        const secret = process.env.JWT_ACCESS_TOKEN + user.password;
         const token = jwt.sign({ gmailInput: user.gmailInput, id: user._id }, secret, {
           expiresIn: '5m',
         });
