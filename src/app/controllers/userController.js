@@ -101,8 +101,11 @@ class userController {
       res.status(500).json(err);
     }
   }
+  forgetPasswordform(req, res) {
+    res.render('forgetPasswordForm');
+  }
   forgotPassword(req, res) {
-    const { gmailInput } = req.body;
+    const gmailInput = req.body.gmail;
     console.log(gmailInput);
     Users.findOne({ gmail: gmailInput })
       .then(user => {
@@ -113,7 +116,7 @@ class userController {
         const token = jwt.sign({ gmailInput: user.gmailInput, id: user._id }, secret, {
           expiresIn: '5m',
         });
-        const link = `http://localhost:3000/reset-password/${user._id}/${token}`;
+        const link = `http://localhost:3000/user/reset-password/${user._id}/${token}`;
         transporter.sendMail({
           to: 'bestquangminh2003@gmail.com',
           from: 'bestquangminh@gmail.com',
@@ -123,7 +126,7 @@ class userController {
         return res.status(200).json('success');
       })
       .catch(err => {
-        res.status(500).json('error');
+        res.status(500).json(err);
       })
   }
   resetPassword(req, res) {
@@ -165,7 +168,7 @@ class userController {
           password: hash,
         },
       });
-      res.json('Password updated successfully');
+      res.redirect('/')
     } catch (err) {
       console.error(err);
       res.send('Not verified');
