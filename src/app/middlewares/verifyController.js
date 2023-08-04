@@ -23,9 +23,9 @@ class VerifyController {
   verifyAdmin = (req, res, next) => {
     this.verifyToken(req, res, () => {
       if (req.user.admin) {
-        next();
+        res.redirect('/admin/stored/order')
       } else {
-        res.status(403).json('You are not admin');
+        next();
       }
     });
   };
