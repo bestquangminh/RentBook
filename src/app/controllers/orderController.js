@@ -46,7 +46,6 @@ class orderController {
                 product_data: {
                   name: p.productID.name,
                   description: p.productID.description,
-
                 }
               },
               quantity: cartItemCount
@@ -134,6 +133,7 @@ class orderController {
 
         let tmnCode = process.env.vnp_TmnCode;
         let secretKey = process.env.vnp_HashSecret
+        console.log(secretKey)
         let vnpUrl = process.env.vnp_Url
         let returnUrl = process.env.vnp_ReturnUrl
         let orderId = moment(date).format('DDHHmmss');

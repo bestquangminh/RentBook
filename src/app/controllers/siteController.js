@@ -117,7 +117,7 @@ class siteController {
       });
       const url = `http://localhost:3000/readbook/${user._id}/${token}`;
       console.log(url);
-      return res.redirect(url);
+      return res.status(200).json({ url });
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -186,7 +186,7 @@ class siteController {
         labels: labels,
         counts: counts
       };
-      res.render('chartOrder',{
+      res.render('chartOrder', {
         response
       });
     } catch (err) {
