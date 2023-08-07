@@ -3,11 +3,11 @@ const router = express.Router();
 const orderController = require('../app/controllers/orderController');
 const verifyController = require('../app/middlewares/verifyController');
 const siteController = require('../app/controllers/siteController');
-router.get('/', verifyController.verifyToken,orderController.getOrder);
+router.get('/', verifyController.verifyToken, orderController.getOrder);
 
 //*VISA PAYMENT
 router.get('/checkout/success', orderController.getOrderSuccess);
-router.get('/checkout/cancel',  siteController.index);
+router.get('/checkout/cancel', siteController.index);
 
 
 //*VNPAY PAYMENT
