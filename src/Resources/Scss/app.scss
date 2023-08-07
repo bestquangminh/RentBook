@@ -3,6 +3,7 @@
 @import './details';
 @import './modal';
 @import './footer';
+@import './admin';
 
 .modal-backdrop {
     z-index: -1;
@@ -197,3 +198,13 @@ footer{
     display: flex;
     align-items: center;
     justify-content: center; }
+
+.modalOverplay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    left: 0;
+    width: 70%;
+}
