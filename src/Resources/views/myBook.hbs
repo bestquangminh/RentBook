@@ -8,10 +8,10 @@
         <img style="width: 240px; height:330px;" src="{{this.images.[0]}}" alt="" class="readbookContrainer__img">
         <div class="readbookContainer__title text-center fw-bold p-2">
           <p class="readbookContainer__title-name">{{this.name}}</p>
-        <form>
-          <button class="border-none addtocartBtn" data-productid="{{this._id}}" type="button">ĐỌC NGAY</button>
-          <input type="hidden" id="productID" name="productID" value="{{this._id}}">
-        </form>
+          <form>
+            <button class="border-none addtocartBtn" data-productid="{{this._id}}" type="button">ĐỌC NGAY</button>
+            <input type="hidden" id="productID" name="productID" value="{{this._id}}">
+          </form>
         </div>
       </div>
     </div>
@@ -36,7 +36,8 @@
           headers: headers
         });
         if (response.status === 200) {
-          alert(response.status);
+          const url = response.data.url;
+          window.location.href = url;
         }
       } catch (error) {
         alert(error);

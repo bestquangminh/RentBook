@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
 const multer = require('multer');
-const upload = multer({dest:''});
+const upload = multer({ dest: '' });
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
@@ -20,14 +20,14 @@ app.engine('hbs', handlebars({
   extname: '.hbs',
   handlebars: allowInsecurePrototypeAccess(require('handlebars')),
   helpers: {
-    sum: (a,b) => a + b,
+    sum: (a, b) => a + b,
   }
 }));
 app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname,'Resources/views'));
-app.use('/src/public/',express.static(path.join(__dirname, 'public/')));
-app.use('/src/public/images',express.static(path.join(__dirname, 'public/images')));
-app.use('/src/public/PDF',express.static(path.join(__dirname, 'public/PDF')));
+app.set('views', path.join(__dirname, 'Resources/views'));
+app.use('/src/public/', express.static(path.join(__dirname, 'public/')));
+app.use('/src/public/images', express.static(path.join(__dirname, 'public/images')));
+app.use('/src/public/PDF', express.static(path.join(__dirname, 'public/PDF')));
 app.use(
   express.urlencoded({
     extended: true,
