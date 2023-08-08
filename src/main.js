@@ -1,4 +1,5 @@
 const express = require('express');
+var cors = require('cors');
 const morgan = require('morgan');
 const handlebars = require('express-handlebars').engine;
 require('dotenv').config();
@@ -11,6 +12,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const app = express();
 const port = 3000;
+app.use(cors());
 app.use(morgan('combined'));
 const route = require('./Routes/index');
 const db = require('./config/db');
