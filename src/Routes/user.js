@@ -9,7 +9,7 @@ router.post(
   verifyController.verifyToken,
   userController.userLogout,
 );
-// router.get('/getAllUser', verifyController.verifyToken, userController.getAllUsers);
+router.get('/getAllUser', userController.getAllUsers);
 
 //* Forget password
 router.get('/forgetPasswordform', userController.forgetPasswordform)
