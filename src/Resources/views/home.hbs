@@ -51,6 +51,7 @@
 <script>
   const addToCartBtn = document.querySelectorAll('.addtocartBtn');
   const addTOCartAPI = '{{addtocartAPI}}';
+  console.log(addTOCartAPI)
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
