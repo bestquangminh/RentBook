@@ -40,7 +40,7 @@
   let header = document.querySelector('.navbarController');
   const username = localStorage.getItem('userName');
   const accessToken = localStorage.getItem('accessToken');
-  const logoutApi = 'http://localhost:3000/user/logout';
+  const logoutApi = process.env.logoutAPI || 'http://localhost:3000/user/logout';
   if (accessToken) {
     const html = `
       <li class='nav-item dropdown nav-item-profile'>
