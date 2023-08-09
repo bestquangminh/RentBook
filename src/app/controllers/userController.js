@@ -71,7 +71,7 @@ class userController {
         });
         // ! hide password in json
         const { password, ...others } = user._doc; //* user._doc là các dữ liệu của user trong mongoDB\
-        res.redirect('/');
+        res.status(200).json({ ...others, accessToken });
       }
     } catch (err) {
       res.status(500).json(err);
