@@ -11,20 +11,20 @@
         <label for='password' class='form-label'>Mật khẩu:</label>
         <input id='password' name='password' type='password' placeholder='Nhập mật khẩu' class='form-control' />
       </div>
-        <div class="buttonContainer">
-          <a href='/registerform'>
-            <span class='text-center d-block mb-2'>Đăng ký tài khoản</span>
-          </a>
-          <a href='/forgetPasswordform'>
-            <span class='text-center d-block mb-2'>Quên mật khẩu ?</span>
-          </a>
-        </div>
-        <button type="submit" class="loginBtn btn btn-danger fw-bold">Đăng nhập</button>
+      <div class="buttonContainer">
+        <a href='/registerform'>
+          <span class='text-center d-block mb-2'>Đăng ký tài khoản</span>
+        </a>
+        <a href='/forgetPasswordform'>
+          <span class='text-center d-block mb-2'>Quên mật khẩu ?</span>
+        </a>
+      </div>
+      <button type="submit" class="loginBtn btn btn-danger fw-bold">Đăng nhập</button>
     </div>
 </form>
 
 <script>
-  const loginapi = 'http://localhost:3000/user/login';
+  const loginapi = process.env.loginAPI || 'http://localhost:3000/user/login';
   const formElement = document.querySelector('#form-1');
 
   formElement.addEventListener('submit', async function (e) {
