@@ -50,7 +50,7 @@
 
 <script>
   const addToCartBtn = document.querySelectorAll('.addtocartBtn');
-  const addTOCartAPI = process.env.addtocartAPI || 'http://localhost:3000/cart/addcart';
+  const addTOCartAPI = '{{addtocartAPI}}';
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('accessToken')}`

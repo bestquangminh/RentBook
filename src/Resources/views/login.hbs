@@ -24,7 +24,7 @@
 </form>
 
 <script>
-  const loginapi = process.env.loginAPI || 'http://localhost:3000/user/login';
+  const loginapi = '{{loginAPI}}';
   const formElement = document.querySelector('#form-1');
 
   formElement.addEventListener('submit', async function (e) {
@@ -48,7 +48,7 @@
         const data = await res.json();
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('userName', data.username);
-        window.location.href = 'http://localhost:3000';
+        window.location.href = '/';
       } else {
         alert('Your username or password is incorrect');
       }

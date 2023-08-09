@@ -7,11 +7,13 @@ const bcrypt = require('bcrypt');
 class siteController {
   async index(req, res, next) {
     try {
+      const addtocartAPI = process.env.addtocartAPI
       const books = await Books.find().populate('author').lean();
       const author = await Author.find().lean();
       res.render('home', {
         books,
-        author
+        author,
+        addtocartAPI
       })
     } catch {
       res.status(500);
@@ -30,7 +32,10 @@ class siteController {
     }
   }
   createFormLogin(req, res, next) {
-    res.render('login');
+    const loginAPI = process.env.loginAPI
+    res.render('login', {
+      loginAPI
+    });
   }
   createFormRegister(req, res, next) {
     res.render('register');
