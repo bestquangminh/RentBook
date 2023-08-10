@@ -67,10 +67,12 @@ class siteController {
     try {
       const book = await Books.findOne({ slug: req.params.slug }).lean().populate('author');
       const authorBook = await Books.find({ author: book.author._id }).lean();
+      const addToCartAPI = process.env.addtocartAPI
       console.log(authorBook);
       res.render('details', {
         book,
-        authorBook
+        authorBook,
+        addToCartAPI
       })
     }
     catch (err) {

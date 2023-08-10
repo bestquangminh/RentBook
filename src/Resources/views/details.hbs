@@ -98,7 +98,7 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script>
-    const addTOCartAPI = 'http://localhost:3000/cart/addcart';
+    const addToCartAPI = '{{addToCartAPI}}';
     const addtocartBtn = document.querySelector('.details__btn-controller-item--hover');
     const headers = {
         'Content-Type': 'application/json',
@@ -107,7 +107,7 @@
     addtocartBtn.addEventListener('click', async (e) => {
         const id = e.target.dataset.productid;
         try {
-            const response = await axios.post(addTOCartAPI, { token: localStorage.getItem('accessToken'), productID: id }, {
+            const response = await axios.post(addToCartAPI, { token: localStorage.getItem('accessToken'), productID: id }, {
                 headers: headers
             });
             if (response.status === 200) {
