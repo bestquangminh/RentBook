@@ -1,6 +1,9 @@
 body {
   background-color: #f0f0f0; }
 
+.swiper-pagination-bullet-active {
+  background-color: #c92127; }
+
 .box {
   text-align: center;
   width: 450px;
@@ -402,3 +405,6 @@ footer {
   z-index: 1;
   left: 0;
   width: 70%; }
+
+.banner__img {
+  border-radius: 12px; }
