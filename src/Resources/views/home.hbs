@@ -56,7 +56,7 @@
           <div class="bookinfo__text">
             <h2 class="bookinfo__text-header">{{this.name}}</h2>
             <span class="bookinfo__text-description">{{this.author.name}}</span>
-            <p class="bookinfo__text-price">{{this.price}} đ</p>
+            <p class="bookinfo__text-price">{{this.price}}</p>
             {{!-- <a class="btn bookinfo__text-btn" href="">Thuê ngay</a> --}}
             <form>
               <button class="btn addtocartBtn" data-productid="{{this._id}}" type="button">Add to cart</button>
@@ -94,6 +94,14 @@
       }
     });
   })
+
+  // Format Price
+  const price = document.querySelectorAll('.bookinfo__text-price');
+  price.forEach(priceElement => {
+    const bookPrice = priceElement.textContent;
+    const formattedPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(bookPrice);
+    priceElement.textContent = formattedPrice;
+  });
 
   //Banner slider
   const swiper = new Swiper(".mySwiper", {
