@@ -116,9 +116,9 @@ class userController {
         const token = jwt.sign({ gmailInput: user.gmailInput, id: user._id }, secret, {
           expiresIn: '5m',
         });
-        const link = `http://localhost:3000/user/reset-password/${user._id}/${token}`;
+        const link = process.env.linkResetPasswordAPI + `${user._id}/${token}`;
         transporter.sendMail({
-          to: 'bestquangminh2003@gmail.com',
+          to: gmailInput, //! gmailInput
           from: 'bestquangminh@gmail.com',
           subject: 'Link To Reset Password',
           text: link

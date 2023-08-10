@@ -42,7 +42,6 @@ class siteController {
   }
   async postBook(req, res, next) {
     try {
-      console.log(req.files);
       const imageFiles = req.files['images']; // Retrieve the array of image files
       const imageUrl = imageFiles.map(file => file.path); // Map the paths of image files
 
