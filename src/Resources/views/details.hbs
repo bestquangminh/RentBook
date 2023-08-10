@@ -2,7 +2,7 @@
     <div class="d-flex mt-5 p-4 details">
         <div style="margin-right: 8px;" class="listOfImage">
             <img class="mb-4 border listOfImage__item" src="/{{book.images.[0]}}" alt="">
-            <img class="border listOfImage__item" src="/{{book.images.[1]}}" alt="">
+            <img class="mb-4 border listOfImage__item" src="/{{book.images.[1]}}" alt="">
             <img class="border listOfImage__item" src="/{{book.images.[2]}}" alt="">
             <img class="border listOfImage__item" src="/{{book.images.[3]}}" alt="">
 
@@ -51,7 +51,7 @@
     </div>
     <div style="margin-top: 12px;" class="p-3 authorBook details">
         <h3>Sản phẩm liên quan</h3>
-        <div class="row">
+        {{!-- <div class="row">
             {{#each authorBook}}
             <div class="col col-lg-3">
                 <a href="/details/{{this.slug}}" class="border d-block authorBook__btn">
@@ -67,6 +67,27 @@
                 </div>
             </div>
             {{/each}}
+        </div> --}}
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                {{#each authorBook}}
+                <div class="swiper-slide">
+                    <a href="/details/{{this.slug}}" class="border d-block authorBook__btn">
+                        <div class="d-flex justify-content-center w-100 h-100 authorBook__containImg">
+                            <img style="height: 200px;" class="img-fluid " src="/{{this.images.[0]}}" alt=""
+                                class="authorBook__img">
+                        </div>
+                    </a>
+                    <div class="authorBook__info">
+                        <a href="/details/{{this.slug}}"
+                            class="link-dark text-decoration-none authorBook__detailsBtn">{{this.name}}</a>
+                        <p class="text-danger fw-bold">{{this.price}}đ</p>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
         </div>
     </div>
 </div>
@@ -75,6 +96,7 @@
     <img class="modal-content" id="img01">
     <div id="caption"></div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
 <script>
     const addTOCartAPI = 'http://localhost:3000/cart/addcart';
     const addtocartBtn = document.querySelector('.details__btn-controller-item--hover');
@@ -120,6 +142,16 @@
         modal.style.display = "none";
     };
 
+    //Swiper
+    const swiper = new Swiper(".mySwiper", {
+        slidesPerView: 3,
+        spaceBetween: 30,
+        grabCursor: true,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+    });
 
 
 </script>
