@@ -83,7 +83,7 @@
     btn.addEventListener('click', async (e) => {
       const id = e.target.dataset.productid;
       try {
-        const response = await axios.post(addTOCartAPI, { token: localStorage.getItem('accessToken'), productID: id }, {
+        const response = await axios.post(addToCartAPI, { token: localStorage.getItem('accessToken'), productID: id }, {
           headers: headers
         });
         if (response.status === 200) {

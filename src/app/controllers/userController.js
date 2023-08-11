@@ -131,7 +131,6 @@ class userController {
   }
   resetPassword(req, res) {
     const { id, token } = req.params;
-    console.log(req.params);
     Users.findOne({ _id: id })
       .then(user => {
         if (!user) {

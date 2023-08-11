@@ -27,8 +27,9 @@
                 <div class='details__btn-controller-item details__btn-controller-item--hover text-decoration-none registernBtn btn btn-link text-danger border border-danger'
                     href='' data-productid="{{book._id}}"><i class="fa-solid fa-cart-shopping"></i>Thêm vào giỏ hàng
                 </div>
-                <a class='details__btn-controller-item loginBtn btn btn-danger fw-bold'
-                    href='http://localhost:3000/loginform'>Thuê ngay</a>
+                <div class='details__btn-controller-item buynowBtn loginBtn btn btn-danger fw-bold'
+                    href='' data-productid="{{book._id}}">Thuê ngay
+                </div>
             </div>
         </div>
     </div>
@@ -100,23 +101,38 @@
 <script>
     const addToCartAPI = '{{addToCartAPI}}';
     const addtocartBtn = document.querySelector('.details__btn-controller-item--hover');
+    const buynowBtn = document.querySelector('.buynowBtn');
     const headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
     };
-    addtocartBtn.addEventListener('click', async (e) => {
+    buynowBtn.addEventListener('click', async (e) => {
         const id = e.target.dataset.productid;
         try {
             const response = await axios.post(addToCartAPI, { token: localStorage.getItem('accessToken'), productID: id }, {
                 headers: headers
             });
             if (response.status === 200) {
-                alert('Đã thêm sản phẩm vào giỏ hàng thành công');
+                window.location.href = '/cart'
             }
         } catch (error) {
             alert(error);
         }
     })
+
+    addtocartBtn.addEventListener('click', async (e) => {
+            const id = e.target.dataset.productid;
+            try {
+                const response = await axios.post(addToCartAPI, { token: localStorage.getItem('accessToken'), productID: id }, {
+                    headers: headers
+                });
+                if (response.status === 200) {
+                    alert('Đã thêm sản phẩm vào giỏ hàng thành công');
+                }
+            } catch (error) {
+                alert(error);
+            }
+        })
     const modal = document.getElementById("myModal");
     // Get the images and insert them inside the modal - use their "alt" text as a caption
     const imgList = document.querySelectorAll(".listOfImage__item");
